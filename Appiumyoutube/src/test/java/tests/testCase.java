@@ -3,6 +3,7 @@ import static org.testng.Assert.assertEquals;
 
 import java.io.IOException;
 
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -16,7 +17,7 @@ public class testCase extends appiumtesst {
 
 	Faker faker = new Faker();
 	String desc = faker.lorem().paragraph();
-	@Test
+	@Test(priority=1)
 	public void createNewToDo()throws IOException, InterruptedException{
 		Homepage objHome = new Homepage(driver);
 		ToDoForm objTdf = new ToDoForm(driver);
@@ -26,13 +27,14 @@ public class testCase extends appiumtesst {
 		objTdf.TypefrmDesc().sendKeys(desc);
 		objTdf.clickBtnSubmit();
 		
+
 		objHome.clickBtnAddtask();
 		objTdf.TypefrmTitle().sendKeys("aldy list 2");
 		objTdf.TypefrmDesc().sendKeys(desc);
 		objTdf.clickBtnSubmit();
-
 }
-	@Test
+
+	@Test(priority=2)
 	public void editToDo()throws IOException, InterruptedException{
 		Homepage objHome = new Homepage(driver);
 		ToDoForm objTdf = new ToDoForm(driver);
@@ -56,26 +58,33 @@ public class testCase extends appiumtesst {
 		Assert.assertEquals(taskName1, "aldy list edited");
 		Assert.assertEquals(taskDetail1, "details edited");
 }
-	@Test
+	@Test(priority=3)
 	public void deleteToDo()throws IOException, InterruptedException{
-		Homepage objHome = new Homepage(driver);
+		
 		ToDoForm objTdf = new ToDoForm(driver);	
 		
-		driver.findElementByXPath("//android.widget.TextView[@text='aldy list 2']").click();
-
+		driver.findElementByXPath("//android.widget.TextView[@text='aldy list edited']").click();
 		objTdf.clickBtnDelete();
-		objHome.clickBtnMore();
-		objHome.clickBtnRefresh();
+		driver.findElementByXPath("//android.widget.TextView[@text='aldy list 2']").click();
+		objTdf.clickBtnDelete();
+
 }
-	@Test
-	public void ChecklistToDo()throws IOException, InterruptedException{
+	@Test(priority=4)
+	public void ChecklistToDo()throws IOException, InterruptedException {
 		Homepage objHome = new Homepage(driver);
-	//	ToDoForm objTdf = new ToDoForm(driver);	
+		ToDoForm objTdf = new ToDoForm(driver);	
+		objHome.clickBtnAddtask();
+		objTdf.TypefrmTitle().sendKeys("aldy list new");
+		objTdf.TypefrmDesc().sendKeys(desc);
+		objTdf.clickBtnSubmit();
+		
+	//	AndroidElement cb = driver.findElementByClassName("android.widget.CheckBox");
 		
 		objHome.clickChklist();
-		
-		//AndroidElement chckbox =  driver.findElementById("com.example.android.architecture.blueprints.todomvp.mock:id/complete");
-		//Assert.assertEquals(true, chckbox.isSelected());
-		
-}
+		objHome.clickBtnMore();
+		objHome.clickBtnRefresh();
+		//Assert.assertEquals(cb.isSelected(), true );
+		//Assert.assertEquals(true, cb.is());
+	
+	}
 }

@@ -1,10 +1,17 @@
 package pages;
 
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import com.github.javafaker.Faker;
+
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.functions.ExpectedCondition;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
@@ -37,11 +44,16 @@ public class Homepage {
 	@AndroidFindBy (xpath = "//android.widget.TextView[@text='Refresh']")
 	AndroidElement btnRefresh;
 	
-	@AndroidFindBy (id  = "com.example.android.architecture.blueprints.todomvp.mock:id/complete")
+	@AndroidFindBy (className = "android.widget.CheckBox")
 	AndroidElement boxChklist;
+	
+	@FindBy (id = "complete")
+	MobileElement tess;
+	
 	
 	public Homepage (AndroidDriver<AndroidElement> driver) {
 PageFactory.initElements(new AppiumFieldDecorator(driver),this);
+
 }
 
 public AndroidElement clickBtnNavigate() {
@@ -77,7 +89,11 @@ public AndroidElement clickBtnRefresh() {
 	return btnRefresh;
 }
 public AndroidElement clickChklist() {
-	boxChklist.click();
+	boxChklist.click(); 
 	return boxChklist;
+}
+public MobileElement test() {
+	tess.click();
+	return tess;
 }
 }
